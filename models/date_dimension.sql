@@ -6,11 +6,10 @@ DATE(TO_TIMESTAMP(STARTED_AT)) AS DATE_STARTED_AT,
 HOUR(TO_TIMESTAMP(STARTED_AT)) AS HOUR_STARTED_AT,
 DAYNAME(TO_TIMESTAMP(STARTED_AT)),
 
-CASE
-when DAYNAME(TO_TIMESTAMP(STARTED_AT)) in ('Sat','Sun')
-then 'Weekend'
-else 'BUSINESSDAY'
-end as  DAY_TYPE
+{{get_day_type('STARTED_AT')}} as DAY_TYPE,
+
+{{get_seasons('STARTED_AT')}} as STATION_OF_YEAR
+
 from 
 {{ source('demo', 'bike') }}
 
